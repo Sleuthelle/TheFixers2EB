@@ -34,6 +34,10 @@ st.markdown("""
             color: #7FDA8F !important;
             font-family: 'Silkscreen', sans-serif !important;
             }
+            ul {
+            color: #7FDA8F !important;
+            font-family: 'Silkscreen', sans-serif !important;
+            }
             .stTextInput {
             font-family
             text-color: #1F3522 !important;
@@ -94,6 +98,19 @@ def explore_dict(thing: dict, path: str = ""):
                     # col1.write(key)
                     make_bool_field(label=label, value=entry)
 
+hints = """
+ Placeholder tokens used in fragments:
+ - {character} - Target's display name
+ - {pronoun_subject} - "she", "he", "they"
+ - {pronoun_subject_cap} - "She", "He", "They"
+ - {pronoun_object} - "her", "him", "them"
+ - {pronoun_possessive} - "her", "his", "their"
+ - {verb_look} - "doesn't" or "don't" (based on plural)
+ - {verb_feel} - "feels" or "feel" (based on plural)
+ - {verb_want} - "wants" or "want" (based on plural)
+ - {verb_be} - "is" or "are" (based on plural)
+ - {verb_plan} - "plans" or "plan" (based on plural)
+"""
 
 #with open("templates/action.json", "r") as fp:
     # with open("templates/character.json", "r") as fp:
@@ -105,6 +122,7 @@ def explore_dict(thing: dict, path: str = ""):
 if __name__ == "__main__":
     filePath = st.text_input("Enter file path. Use just a folder for pulling multiple files, and go directly to the file for just the one file.")
     if st.button("Submit File Path"):
+        st.write(hints)
         if filePath.endswith(".json"):
             with open(filePath) as jsonFile:
                 jsonFileData = json.load(jsonFile)
