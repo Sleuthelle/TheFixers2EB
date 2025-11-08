@@ -1,0 +1,1149 @@
+/**
+ * Observation Narrative Fragments
+ *
+ * Composable text fragments for InspectUser action that vary based on 7D status.
+ * Supports mix-and-match composition for combined conditions.
+ *
+ * Pattern: Status-conditional narratives (first use of this pattern)
+ * Future: Can be extended to InspectItem, InspectRoom, SearchBody, etc.
+ */
+
+export interface ObservationFragment {
+  /** The narrative text with placeholders */
+  text: string;
+  /** Priority (higher = more important, shows first) */
+  priority: number;
+}
+
+/**
+ * Single-condition fragments
+ * Used when only one status is abnormal
+ */
+export const SINGLE_CONDITION_FRAGMENTS: Record<string, ObservationFragment> = {
+  // HIGHEST PRIORITY - Terminal/Dramatic States
+  "narrativeStatus:Zombie": {
+    text: "{character} has become something... inhuman.",
+    priority: 100,
+  },
+  "narrativeStatus:Dead": {
+    text: "{character} is dead!",
+    priority: 90,
+  },
+
+  // HIGH PRIORITY - Critical Physical State
+  "physicalStatus:Deteriorating": {
+    text: "{character} is bleeding out!",
+    priority: 80,
+  },
+
+  // MEDIUM PRIORITY - Ambiguous Mental/Infection State
+  // Intentionally identical to create gameplay ambiguity
+  "logicStatus:ErrorProne": {
+    text: "{character} doesn't look so good.",
+    priority: 50,
+  },
+  "narrativeStatus:Symptomatic": {
+    text: "{character} doesn't look so good.",
+    priority: 50,
+  },
+};
+
+/**
+ * Composite fragments for multiple conditions
+ * Used when target has multiple abnormal statuses
+ */
+export const COMPOSITE_FRAGMENTS: Record<string, ObservationFragment> = {
+  // Physical + Mental/Infection
+  "physicalStatus:Deteriorating+logicStatus:ErrorProne": {
+    text: "{character} is bleeding out! {pronoun_subject_cap} {verb_look} so good.",
+    priority: 85,
+  },
+  "physicalStatus:Deteriorating+narrativeStatus:Symptomatic": {
+    text: "{character} is bleeding out! {pronoun_subject_cap} {verb_look} so good.",
+    priority: 85,
+  },
+
+  // Future: Add more composite conditions as gameplay evolves
+};
+
+/**
+ * Default fragment when all statuses are normal
+ */
+export const DEFAULT_FRAGMENT: ObservationFragment = {
+  text: "{character} seems more or less normal.",
+  priority: 0,
+};
+
+/**
+ * Character-specific tells - Off-character behaviors signaling trouble
+ *
+ * These apply to BOTH logicStatus:ErrorProne (sanity) AND narrativeStatus:Symptomatic (infection)
+ * to maintain gameplay ambiguity while adding rich characterization.
+ *
+ * Priority 51 overrides generic "doesn't look so good" (50) but loses to critical states (bleeding, dead, zombie)
+ */
+export const CHARACTER_SPECIFIC_TELLS: Record<
+  string,
+  Record<string, ObservationFragment>
+> = {
+  Dalton: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is quietly mouthing Drake lyrics to {pronoun_object}self.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is quietly mouthing Drake lyrics to {pronoun_object}self.",
+      priority: 51,
+    },
+  },
+
+  Dan: {
+    "logicStatus:ErrorProne": {
+      text: "{character} keeps going on about the importance of work-life balance.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} keeps going on about the importance of work-life balance.",
+      priority: 51,
+    },
+  },
+
+  Rachel: {
+    "logicStatus:ErrorProne": {
+      text: "{character} mentions {pronoun_subject} {verb_feel} like cleaning the kitchen.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} mentions {pronoun_subject} {verb_feel} like cleaning the kitchen.",
+      priority: 51,
+    },
+  },
+
+  Jack: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is scrolling through office swag on Pinterest.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is scrolling through office swag on Pinterest.",
+      priority: 51,
+    },
+  },
+
+  Ben: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is going on about how sports are overrated.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is going on about how sports are overrated.",
+      priority: 51,
+    },
+  },
+
+  Annie: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is making fun of Swifties.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is making fun of Swifties.",
+      priority: 51,
+    },
+  },
+
+  Kahlil: {
+    "logicStatus:ErrorProne": {
+      text: "{character} won't stop talking about how {pronoun_subject} {verb_want} to play poker.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} won't stop talking about how {pronoun_subject} {verb_want} to play poker.",
+      priority: 51,
+    },
+  },
+
+  Maya: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is complaining about how {pronoun_subject} {verb_be} tired of poker.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is complaining about how {pronoun_subject} {verb_be} tired of poker.",
+      priority: 51,
+    },
+  },
+
+  Timmy: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is keeping to {pronoun_object}self, not talking to anyone.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is keeping to {pronoun_object}self, not talking to anyone.",
+      priority: 51,
+    },
+  },
+
+  Nate: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is talking about how {pronoun_subject} {verb_be} tired of the college party scene.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is talking about how {pronoun_subject} {verb_be} tired of the college party scene.",
+      priority: 51,
+    },
+  },
+
+  Ethan: {
+    "logicStatus:ErrorProne": {
+      text: "{character} keeps saying {pronoun_subject} {verb_be} tired of poker.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} keeps saying {pronoun_subject} {verb_be} tired of poker.",
+      priority: 51,
+    },
+  },
+
+  Felipe: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is loudly bragging about {pronoun_possessive} app.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is loudly bragging about {pronoun_possessive} app.",
+      priority: 51,
+    },
+  },
+
+  Dawson: {
+    "logicStatus:ErrorProne": {
+      text: "{character} won't stop telling bad jokes.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} won't stop telling bad jokes.",
+      priority: 51,
+    },
+  },
+
+  Brandon: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is being unusually talkative.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is being unusually talkative.",
+      priority: 51,
+    },
+  },
+
+  Gobin: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is talking about how {pronoun_subject} {verb_plan} to get here at 7 AM tomorrow.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is talking about how {pronoun_subject} {verb_plan} to get here at 7 AM tomorrow.",
+      priority: 51,
+    },
+  },
+
+  Gautam: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is just staring at you.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is just staring at you.",
+      priority: 51,
+    },
+  },
+
+  Samuel: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is standing facing the wall.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is standing facing the wall.",
+      priority: 51,
+    },
+  },
+
+  Michael: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is loudly gossiping on the phone.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is loudly gossiping on the phone.",
+      priority: 51,
+    },
+  },
+
+  Connor: {
+    "logicStatus:ErrorProne": {
+      text: "{character} says {pronoun_subject} {verb_plan} to stay past 5 today.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} says {pronoun_subject} {verb_plan} to stay past 5 today.",
+      priority: 51,
+    },
+  },
+
+  Zaid: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is saying we need to stop filling the fridge with Dr Pepper.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is saying we need to stop filling the fridge with Dr Pepper.",
+      priority: 51,
+    },
+  },
+
+  Wes: {
+    "logicStatus:ErrorProne": {
+      text: "{character} is drinking a glass of tap water.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "{character} is drinking a glass of tap water.",
+      priority: 51,
+    },
+  },
+};
+
+/**
+ * Placeholder tokens used in fragments:
+ * - {character} - Target's display name
+ * - {pronoun_subject} - "she", "he", "they"
+ * - {pronoun_subject_cap} - "She", "He", "They"
+ * - {pronoun_object} - "her", "him", "them"
+ * - {pronoun_possessive} - "her", "his", "their"
+ * - {verb_look} - "doesn't" or "don't" (based on plural)
+ * - {verb_feel} - "feels" or "feel" (based on plural)
+ * - {verb_want} - "wants" or "want" (based on plural)
+ * - {verb_be} - "is" or "are" (based on plural)
+ * - {verb_plan} - "plans" or "plan" (based on plural)
+ */
+
+
+
+
+
+AND
+
+/**
+ * Self-Observation Narrative Fragments
+ *
+ * Second-person fragments for CheckOwnStatus action.
+ * Parallel structure to ObservationFragments but written for self-inspection.
+ */
+
+import type { ObservationFragment } from "./ObservationFragments";
+
+/**
+ * Single-condition fragments for self-observation
+ * Written in second person (addressing yourself)
+ */
+export const SELF_SINGLE_CONDITION_FRAGMENTS: Record<
+  string,
+  ObservationFragment
+> = {
+  // HIGHEST PRIORITY - Terminal/Dramatic States
+  "narrativeStatus:Zombie": {
+    text: "You've become something... inhuman. The hunger is overwhelming.",
+    priority: 100,
+  },
+  "narrativeStatus:Dead": {
+    text: "You are dead.",
+    priority: 90,
+  },
+
+  // HIGH PRIORITY - Critical Physical State
+  "physicalStatus:Deteriorating": {
+    text: "You're bleeding out! You need to find help fast.",
+    priority: 80,
+  },
+
+  // MEDIUM PRIORITY - Ambiguous Mental/Infection State
+  // Intentionally creates uncertainty about whether you're losing your mind or getting infected
+  "narrativeStatus:Just Bitten": {
+    text: "You're still a bit frazzled from having been attacked by a stranger this morning.",
+    priority: 50,
+  },
+  "logicStatus:ErrorProne": {
+    text: "You don't feel so good. Something feels... off.",
+    priority: 50,
+  },
+  "narrativeStatus:Symptomatic": {
+    text: "You don't feel so good. Something feels... wrong.",
+    priority: 50,
+  },
+};
+
+/**
+ * Composite fragments for multiple conditions
+ */
+export const SELF_COMPOSITE_FRAGMENTS: Record<string, ObservationFragment> = {
+  // Physical + Mental/Infection
+  "physicalStatus:Deteriorating+logicStatus:ErrorProne": {
+    text: "You're bleeding out, and your head doesn't feel right either.",
+    priority: 85,
+  },
+  "physicalStatus:Deteriorating+narrativeStatus:Symptomatic": {
+    text: "You're bleeding out, and you feel sick on top of it.",
+    priority: 85,
+  },
+};
+
+/**
+ * Default fragment when all statuses are normal
+ */
+export const SELF_DEFAULT_FRAGMENT: ObservationFragment = {
+  text: "You feel more or less normal. Nothing hurting, nothing wrong.",
+  priority: 0,
+};
+
+/**
+ * Character-specific self-observations
+ *
+ * How each character talks to themselves when ErrorProne or Symptomatic.
+ * First-person internal monologue style.
+ */
+export const SELF_CHARACTER_SPECIFIC_TELLS: Record<
+  string,
+  Record<string, ObservationFragment>
+> = {
+  Dalton: {
+    "logicStatus:ErrorProne": {
+      text: "You catch yourself quietly mouthing Drake lyrics. That's... unlike you.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You catch yourself quietly mouthing Drake lyrics. Why would you do that?",
+      priority: 51,
+    },
+  },
+
+  Dan: {
+    "logicStatus:ErrorProne": {
+      text: "You suddenly feel the need to talk about work-life balance. Since when do you care about that?",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You can't stop thinking about work-life balance. That's not like you.",
+      priority: 51,
+    },
+  },
+
+  Rachel: {
+    "logicStatus:ErrorProne": {
+      text: "You feel an urge to clean the kitchen. That's weird.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You really want to clean the kitchen right now. Why?",
+      priority: 51,
+    },
+  },
+
+  Jack: {
+    "logicStatus:ErrorProne": {
+      text: "You find yourself scrolling through office swag on Pinterest. Huh.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You're looking at office swag on Pinterest. When did you open that?",
+      priority: 51,
+    },
+  },
+
+  Ben: {
+    "logicStatus:ErrorProne": {
+      text: "You're thinking about how sports are overrated. That's not right.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You start ranting internally about how sports are overrated. Since when?",
+      priority: 51,
+    },
+  },
+
+  Annie: {
+    "logicStatus:ErrorProne": {
+      text: "You're internally mocking Swifties. That's mean. And weird.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You can't stop thinking cruel thoughts about Swifties. That's not you.",
+      priority: 51,
+    },
+  },
+
+  Kahlil: {
+    "logicStatus:ErrorProne": {
+      text: "All you can think about is poker. You need to play poker. Now.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "The urge to play poker is overwhelming. It's all you can think about.",
+      priority: 51,
+    },
+  },
+
+  Maya: {
+    "logicStatus:ErrorProne": {
+      text: "You're so tired of poker. The thought of it makes you nauseous.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You hate poker. You hate it so much. Why does it bother you so much?",
+      priority: 51,
+    },
+  },
+
+  Timmy: {
+    "logicStatus:ErrorProne": {
+      text: "You don't want to talk to anyone. You just want to be alone.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "The thought of talking to someone makes you uncomfortable. Stay quiet.",
+      priority: 51,
+    },
+  },
+
+  Nate: {
+    "logicStatus:ErrorProne": {
+      text: "You're thinking about how tired you are of the college party scene. That's random.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "College parties. You're suddenly fixated on how much you hate college parties.",
+      priority: 51,
+    },
+  },
+
+  Ethan: {
+    "logicStatus:ErrorProne": {
+      text: "You're tired of poker. So, so tired of poker.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "Poker. Why do you keep thinking about poker? You're so tired of it.",
+      priority: 51,
+    },
+  },
+
+  Felipe: {
+    "logicStatus:ErrorProne": {
+      text: "You feel this overwhelming urge to brag about your app to anyone who'll listen.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "Your app. It's so good. Everyone needs to know about your app. Now.",
+      priority: 51,
+    },
+  },
+
+  Dawson: {
+    "logicStatus:ErrorProne": {
+      text: "Bad jokes. You can't stop thinking of bad jokes. They're so funny.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You keep thinking of terrible jokes. They're hilarious. Why isn't anyone laughing?",
+      priority: 51,
+    },
+  },
+
+  Brandon: {
+    "logicStatus:ErrorProne": {
+      text: "You feel unusually chatty. Words keep bubbling up.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "You need to talk. You need to tell everyone everything. Can't stop talking.",
+      priority: 51,
+    },
+  },
+
+  Gobin: {
+    "logicStatus:ErrorProne": {
+      text: "You're planning to get here at 7 AM tomorrow. That's a great idea.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "7 AM. You'll come in at 7 AM. Maybe 6:30. That's the plan.",
+      priority: 51,
+    },
+  },
+
+  Gautam: {
+    "logicStatus:ErrorProne": {
+      text: "You're staring. Just... staring. At what? You're not sure.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "Everything looks different. You can't stop staring. What are you looking at?",
+      priority: 51,
+    },
+  },
+
+  Samuel: {
+    "logicStatus:ErrorProne": {
+      text: "You feel drawn to face the wall. It's calming somehow.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "The wall. You need to look at the wall. Turn around. Face it.",
+      priority: 51,
+    },
+  },
+
+  Michael: {
+    "logicStatus:ErrorProne": {
+      text: "You have so much gossip to share. People need to know.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "The gossip. It's burning inside you. You have to tell someone. Anyone.",
+      priority: 51,
+    },
+  },
+
+  Connor: {
+    "logicStatus:ErrorProne": {
+      text: "You're thinking about staying past 5 today. Maybe even 6. Or 7.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "Stay late. You need to stay late. Don't leave at 5. Stay.",
+      priority: 51,
+    },
+  },
+
+  Zaid: {
+    "logicStatus:ErrorProne": {
+      text: "The Dr Pepper in the fridge is really bothering you. Someone needs to do something about it.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "Too much Dr Pepper. Way too much. It's all you can think about. Make it stop.",
+      priority: 51,
+    },
+  },
+
+  Wes: {
+    "logicStatus:ErrorProne": {
+      text: "You're drinking tap water. Tap water tastes good actually.",
+      priority: 51,
+    },
+    "narrativeStatus:Symptomatic": {
+      text: "Tap water. You need tap water. Not filtered. From the tap. That's the good stuff.",
+      priority: 51,
+    },
+  },
+};
+
+
+
+
+
+NOW HERE ARE SOME ACTION EXAMPLES AND TEXT FRAGMENTS (ignore the system ones):
+
+
+/**
+ * ActionNarrativeTemplates
+ *
+ * Pure data: narrative text templates for all game actions
+ * Separated from logic for easy extension and mod support
+ *
+ * Template placeholders:
+ *
+ * Basic:
+ * - {SourceName} - Character display name of action performer
+ * - {TargetName} - Character display name of target user
+ * - {TargetRoomName} - Display name of target room
+ * - {ItemName} - Display name of target item
+ * - {message} - Custom message (for Talk action)
+ *
+ * Pronouns (source = actor, target = action target):
+ * - {source_pronoun_subject} - "she", "he", "they"
+ * - {source_pronoun_subject_cap} - "She", "He", "They"
+ * - {source_pronoun_object} - "her", "him", "them"
+ * - {source_pronoun_possessive} - "her", "his", "their"
+ * - {target_pronoun_*} - Same as above for target
+ *
+ * Verb conjugations (auto-conjugates based on singular/plural):
+ * - {source_verb_apply} - "applies" (she/he) or "apply" (they)
+ * - {source_verb_treat}, {source_verb_clean}, {source_verb_move}, etc.
+ * - {source_verb_restrain} - "restrains" or "restrain"
+ * - {source_verb_free} - "frees" or "free"
+ * - {source_verb_is} - "is" or "are"
+ * - {source_verb_appears} - "appears" or "appear"
+ * - {source_verb_does} - "does" or "do"
+ * - {target_verb_*} - Same as above for target
+ * - See NarrativeGenerator.ts for full list of supported verbs
+ */
+
+export type NarrativeTemplate = {
+  /** First-person narrative (shown to action performer) */
+  narrativeText: string | null;
+  /** Third-person narrative (shown to witnesses in same room) */
+  thirdPersonNarrativeText: string | null;
+  /** Target perspective (shown to action target, e.g., "You were struck") */
+  targetNarrativeText?: string | null;
+};
+
+export type ActionTemplateId = string;
+
+/**
+ * Core action narrative templates
+ * Client-side presentation layer for all game actions
+ */
+export const CORE_ACTION_NARRATIVES: Record<
+  ActionTemplateId,
+  NarrativeTemplate
+> = {
+  // ============================================================================
+  // MOVEMENT
+  // ============================================================================
+  Move: {
+    narrativeText: "You move to the {TargetRoomName}.",
+    thirdPersonNarrativeText: "{SourceName} moves to the {TargetRoomName}.",
+  },
+
+  // ============================================================================
+  // ITEM INTERACTIONS
+  // ============================================================================
+  PickUpItem: {
+    narrativeText: "You pick up the {ItemName}.",
+    thirdPersonNarrativeText: "{SourceName} picks up the {ItemName}.",
+  },
+  DropItem: {
+    narrativeText: "You drop the {ItemName}.",
+    thirdPersonNarrativeText: "{SourceName} drops the {ItemName}.",
+  },
+  GiveItem: {
+    narrativeText: "You give the {ItemName} to {TargetName}.",
+    thirdPersonNarrativeText:
+      "{SourceName} gives the {ItemName} to {TargetName}.",
+  },
+  EquipItem: {
+    narrativeText: "You equip the {ItemName}.",
+    thirdPersonNarrativeText: "{SourceName} equips the {ItemName}.",
+  },
+  UnequipItem: {
+    narrativeText: "You unequip the {ItemName}.",
+    thirdPersonNarrativeText: "{SourceName} unequips the {ItemName}.",
+  },
+
+  // ============================================================================
+  // BASIC ACTIONS
+  // ============================================================================
+  Wait: {
+    narrativeText: "You wait and observe.",
+    thirdPersonNarrativeText: "{SourceName} waits.",
+  },
+  Search: {
+    narrativeText: "You search the room.",
+    thirdPersonNarrativeText: "{SourceName} searches the room.",
+  },
+  TrapRoom: {
+    narrativeText: "You set the {ItemName} in the room.",
+    thirdPersonNarrativeText: "{SourceName} sets a trap in the room.",
+  },
+  TrapBody: {
+    narrativeText:
+      "You plant the {ItemName} on {target_pronoun_possessive} body.",
+    thirdPersonNarrativeText:
+      "{SourceName} plants a trap on {target_pronoun_possessive} body.",
+    targetNarrativeText: "{SourceName} plants a trap on your body.",
+  },
+  DisarmTrap: {
+    narrativeText: "You carefully disarm the {ItemName}.",
+    thirdPersonNarrativeText: "{SourceName} carefully disarms the {ItemName}.",
+  },
+
+  // ============================================================================
+  // MEDICAL ACTIONS
+  // ============================================================================
+  Heal: {
+    narrativeText:
+      "You carefully clean {target_pronoun_possessive} wounds, fingers working with practiced precision. As you apply the bandage, your hands touch - you both freeze for half a second. There's unexpected eye contact. The moment stretches. Did you two just share a moment? You make a mental note to check your compatibility on Costar.",
+    thirdPersonNarrativeText:
+      "{SourceName} carefully treats {target_pronoun_possessive} wounds. As {source_pronoun_subject} {source_verb_apply} the final bandage, {source_pronoun_possessive} hands touch - they both freeze for half a second. There's eye contact. The moment lingers. Did they just... share a moment?",
+    targetNarrativeText:
+      "{SourceName} carefully cleans your wounds, fingers working with practiced precision. As {source_pronoun_subject} {source_verb_apply} the bandage, your hands touch - you both freeze for half a second. There's unexpected eye contact. The moment stretches. Did you two just share a moment? You make a mental note to check your compatibility on Costar.",
+  },
+  HealSelf: {
+    narrativeText: "You treat your wounds. You feel more stable.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_treat} {source_pronoun_possessive} wounds.",
+  },
+
+  // ============================================================================
+  // COMBAT ACTIONS
+  // ============================================================================
+  KillTarget: {
+    narrativeText: "You strike {TargetName} with the {ItemName}.",
+    thirdPersonNarrativeText:
+      "{SourceName} strikes {TargetName} with the {ItemName}.",
+    targetNarrativeText: "{SourceName} strikes you with the {ItemName}.",
+  },
+  Restrain: {
+    narrativeText: "You restrain {TargetName} with the {ItemName}.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_restrain} {TargetName} with the {ItemName}.",
+    targetNarrativeText: "{SourceName} restrains you with the {ItemName}!",
+  },
+  FreeUser: {
+    narrativeText:
+      "You free {TargetName} from {target_pronoun_possessive} restraints.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_free} {TargetName} from {target_pronoun_possessive} restraints.",
+    targetNarrativeText: "{SourceName} frees you from your restraints.",
+  },
+
+  // ============================================================================
+  // ITEM OPERATIONS (Doors, Locks, Traps)
+  // ============================================================================
+  LockItem: {
+    narrativeText: "You try to lock the {ItemName}",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_try} to lock the {ItemName}",
+  },
+  UnlockItem: {
+    narrativeText: "You try to unlock the {ItemName}",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_try} to unlock the {ItemName}",
+  },
+  DisarmItem: {
+    narrativeText: "You disarm the {ItemName}.",
+    thirdPersonNarrativeText: "{SourceName} disarms the {ItemName}.",
+  },
+
+  // ============================================================================
+  // TRAP ACTIONS
+  // ============================================================================
+  SetTrap: {
+    narrativeText: "You set a trap in the {TargetRoomName}.",
+    thirdPersonNarrativeText: "{SourceName} sets a trap in the room.",
+  },
+  SetBodyTrap: {
+    narrativeText: "You trap {target_pronoun_possessive} body.",
+    thirdPersonNarrativeText:
+      "{SourceName} traps {target_pronoun_possessive} body.",
+    targetNarrativeText: "{SourceName} traps your body.",
+  },
+
+  // ============================================================================
+  // INSPECTION ACTIONS (Fallback templates - overridden by generators)
+  // ============================================================================
+  InspectRoom: {
+    // Fallback - RoomObservationGenerator provides context-aware version
+    narrativeText: "You look around the {TargetRoomName}.",
+    thirdPersonNarrativeText: "{SourceName} is looking around the room.",
+  },
+  InspectUser: {
+    // Fallback - UserObservationGenerator provides status-conditional version
+    narrativeText: "You inspect {TargetName}.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_appears} to be watching {TargetName} closely.",
+    targetNarrativeText:
+      "{SourceName} {source_verb_appears} to be watching you closely.",
+  },
+  CheckOwnStatus: {
+    // Fallback - UserObservationGenerator provides status-conditional self-observation
+    narrativeText: "You take stock of how you're feeling.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_pause} for a moment, looking very contemplative.",
+  },
+  CheckProgressions: {
+    // Silent action - no narrative output (client-triggered progression check)
+    narrativeText: null,
+    thirdPersonNarrativeText: null,
+  },
+  InspectPlayer: {
+    narrativeText: "You inspect {TargetName}.",
+    thirdPersonNarrativeText: "{SourceName} inspects {TargetName}.",
+    targetNarrativeText: "{SourceName} inspects you closely.",
+  },
+  InspectItem: {
+    narrativeText:
+      "You look closer at the {ItemName}. There's nothing unusual about it.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_is} staring at the {ItemName}.",
+  },
+  SearchBody: {
+    narrativeText:
+      "You search {target_pronoun_possessive} body. The sight disturbs you deeply.",
+    thirdPersonNarrativeText:
+      "{SourceName} searches {target_pronoun_possessive} body.",
+    targetNarrativeText:
+      "{SourceName} searches your body. (Wait, you're dead. You can't feel this.)",
+  },
+
+  // ============================================================================
+  // MENTAL HEALTH ACTIONS
+  // ============================================================================
+  SelfGuided: {
+    narrativeText: "You do self guided. Your mind clears.",
+    thirdPersonNarrativeText: "{SourceName} {source_verb_does} self guided.",
+  },
+  Meditate: {
+    narrativeText: "You meditate and clear your mind.",
+    thirdPersonNarrativeText: "{SourceName} meditates.",
+  },
+
+  // ============================================================================
+  // SOCIAL ACTIONS
+  // ============================================================================
+  Talk: {
+    narrativeText: 'You say, "{message}"',
+    thirdPersonNarrativeText: '{SourceName} says, "{message}"',
+    targetNarrativeText: null,
+  },
+  PlayHeadsUp: {
+    narrativeText:
+      "You play a hand of poker with {TargetName}. It helps clear your mind.",
+    thirdPersonNarrativeText: "{SourceName} plays poker with {TargetName}.",
+    targetNarrativeText:
+      "{SourceName} plays a hand of poker with you. It helps clear your mind.",
+  },
+
+  // ============================================================================
+  // SYSTEM ACTIONS
+  // ============================================================================
+  CheckStatus: {
+    narrativeText: "You check your status.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_check} {source_pronoun_possessive} status.",
+  },
+  SystemProgression: {
+    // System progressions don't generate narrative (shown via UI effects)
+    narrativeText: null,
+    thirdPersonNarrativeText: null,
+  },
+  CreateGame: {
+    narrativeText: "You create a new game.",
+    thirdPersonNarrativeText: "{SourceName} creates a new game.",
+  },
+  JoinGame: {
+    narrativeText: "You join the lobby.",
+    thirdPersonNarrativeText: "{SourceName} joins the lobby.",
+  },
+  SelectCharacter: {
+    narrativeText: "You select {TargetName} as your character.",
+    thirdPersonNarrativeText:
+      "{SourceName} {source_verb_select} {TargetName} as {source_pronoun_possessive} character.",
+  },
+  DeselectCharacter: {
+    narrativeText: "You deselect your character.",
+    thirdPersonNarrativeText: "{SourceName} deselects their character.",
+  },
+  StartGame: {
+    narrativeText: null,
+    thirdPersonNarrativeText: null,
+  },
+  AssignRole: {
+    narrativeText: "System: Role assigned.",
+    thirdPersonNarrativeText: "System: Role assigned.",
+  },
+  InitializeWorld: {
+    narrativeText: "System: World initialized.",
+    thirdPersonNarrativeText: "System: World initialized.",
+  },
+
+  // ============================================================================
+  // MOD-SPECIFIC: CINDERBLOCK ZOMBIE ACTIONS
+  // ============================================================================
+  Bite: {
+    narrativeText: "You bite {TargetName}. The infection spreads.",
+    thirdPersonNarrativeText:
+      "{SourceName} bites {TargetName}. The infection spreads.",
+    targetNarrativeText:
+      "{SourceName} bites you! The infection spreads through your body.",
+  },
+};
+
+
+ACTION SUFFIXES (OUTCOME DEPENDENT)
+
+
+/**
+ * Outcome Narrative Suffixes
+ *
+ * Outcome-specific narrative fragments appended to base action narratives.
+ *
+ * Purpose:
+ * - Provide context-specific endings for multi-outcome actions
+ * - Example: "Annie strikes Timmy with a fire extinguisher" + death suffix
+ *
+ * Pattern:
+ * - Key: OutcomeId from server (e.g., "Kill_InstantDeath")
+ * - Value: Suffix text with placeholders (same system as ActionNarrativeTemplates)
+ *
+ * Placeholders Supported:
+ * - All placeholders from ActionNarrativeTemplates work here
+ * - {target_pronoun_subject}, {target_pronoun_possessive}, etc.
+ * - {target_verb_*} - Auto-conjugated verbs
+ * - {source_pronoun_*}, {source_verb_*} - Actor placeholders
+ *
+ * Usage:
+ * - Server sends outcomeId in eventResult
+ * - Client looks up suffix, replaces placeholders, appends to base narrative
+ * - If no suffix defined → no change (graceful degradation)
+ *
+ * Extensibility:
+ * - Mods can add their own outcome suffixes
+ * - Only add suffixes for outcomes that need narrative enhancement
+ * - Most outcomes don't need suffixes (base narrative is sufficient)
+ */
+
+export const OUTCOME_NARRATIVE_SUFFIXES: Record<string, string> = {
+  // ============================================================================
+  // KILLTARGET OUTCOMES
+  // ============================================================================
+
+  /**
+   * Kill_MutualDeath - Both armed, both Deteriorating → both die
+   * Suffix for mutual death in armed combat
+   */
+  "Kill_MutualDeath": " You both kill each other in the exchange.",
+
+  /**
+   * Kill_TargetDiesSourceWounded - Both armed, source Stable, target Deteriorating
+   * Source kills target but gets wounded in the process
+   */
+  "Kill_TargetDiesSourceWounded": " {target_pronoun_subject_cap} {target_verb_fall}, dead. But you take a serious wound in the fight.",
+
+  /**
+   * Kill_SourceDiesTargetWounded - Both armed, source Deteriorating, target Stable
+   * Target counterattacks and kills source
+   */
+  "Kill_SourceDiesTargetWounded": " {target_pronoun_subject_cap} counterattacks and kills you.",
+
+  /**
+   * Kill_MutualWounding - Both armed, both Stable → both wounded
+   * Brutal fight where both combatants wound each other
+   */
+  "Kill_MutualWounding": " You both wound each other badly in the exchange.",
+
+  /**
+   * Kill_InstantDeath - Target unarmed + Deteriorating, finishing blow kills instantly
+   * Appends dramatic death narrative for critically wounded targets
+   */
+  "Kill_InstantDeath": " Already bleeding, {target_pronoun_subject} {target_verb_does}n't stand a chance. {target_pronoun_subject_cap} {target_verb_fall} to the floor with a thud and {target_verb_stop} moving altogether.",
+
+  /**
+   * Kill_WoundTarget - Target unarmed + Stable, now Deteriorating (bleeding out)
+   * Appends wounding narrative, creating tension - target is wounded but not dead yet
+   */
+  "Kill_WoundTarget": " {target_pronoun_subject_cap} {target_verb_stagger} backward, clutching the wound. Blood seeps through {target_pronoun_possessive} fingers.",
+
+  // ============================================================================
+  // SEARCH + TRAP OUTCOMES
+  // ============================================================================
+
+  /**
+   * Search_TriggerTrap_Kill - Room trap triggers, victim already wounded → death
+   * Trap kills critically wounded victim
+   */
+  "Search_TriggerTrap_Kill": " A hidden trap springs! Already wounded, you don't stand a chance. Everything goes dark.",
+
+  /**
+   * Search_TriggerTrap_Wound - Room trap triggers, victim healthy → wounded + restrained
+   * Trap wounds and immobilizes victim
+   */
+  "Search_TriggerTrap_Wound": " A hidden trap springs! You cry out as it catches you, pinning you in place. Blood seeps from the wound.",
+
+  /**
+   * Search_RevealHiddenItem - Found hidden non-trap item
+   * Discovery of concealed item
+   */
+  "Search_RevealHiddenItem": " You find a hidden {ItemName}!",
+
+  /**
+   * Search_FindNothing - Exhaustive search yields nothing
+   * Empty search result
+   */
+  "Search_FindNothing": " You find nothing of interest.",
+
+  /**
+   * SearchBody_TriggerTrap_Kill - Body trap triggers, victim already wounded → death
+   * Trap on corpse kills critically wounded searcher
+   */
+  "SearchBody_TriggerTrap_Kill": " A trap was rigged to the body! Already wounded, you don't survive. Everything goes dark.",
+
+  /**
+   * SearchBody_TriggerTrap_Wound - Body trap triggers, victim healthy → wounded + restrained
+   * Trap on corpse wounds and immobilizes searcher
+   */
+  "SearchBody_TriggerTrap_Wound": " A trap was rigged to the body! It springs and catches you, pinning you in place. The pain is intense.",
+
+  // ============================================================================
+  // FREEUSER OUTCOMES
+  // ============================================================================
+
+  /**
+   * FreeUser_LastRestraint_Corpse - Removed last restraint from corpse → body movable
+   * Freeing corpse from trap/restraint allows body to be moved
+   */
+  "FreeUser_LastRestraint_Corpse": " The corpse is free now and can be moved.",
+
+  // ============================================================================
+  // LOCK/UNLOCK OUTCOMES
+  // ============================================================================
+
+  /**
+   * Lock_Success - Successfully locked door
+   * Provides satisfying feedback that the lock engaged
+   */
+  "Lock_Success": " The lock clicks shut.",
+
+  /**
+   * Lock_WrongKey - Player tries to lock door with wrong key
+   * Key doesn't fit the lock mechanism
+   */
+  "Lock_WrongKey": " The key doesn't fit the lock.",
+
+  /**
+   * Unlock_Success - Successfully unlocked door
+   * Provides satisfying feedback that the lock disengaged
+   */
+  "Unlock_Success": " The lock clicks open.",
+
+  /**
+   * Unlock_WrongKey - Player tries to unlock door with wrong key
+   * Key doesn't fit the lock mechanism
+   */
+  "Unlock_WrongKey": " The key doesn't fit the lock.",
+
+  // ============================================================================
+  // FUTURE: Add suffixes for other multi-outcome actions as needed
+  // ============================================================================
+
+  // Examples (not implemented yet):
+  // "PickUp_ToMainSlot": " You equip it in your main hand.",
+  // "PickUp_ToOffhandSlot": " You equip it in your offhand.",
+  // "PickUp_ToDeskSlot": " Your hands are full - you store it at your desk for later.",
+  // "Heal_FullRecovery": " {target_pronoun_subject_cap} {target_verb_is} back to full strength.",
+  // "Heal_PartialRecovery": " It helps, but {target_pronoun_subject} {target_verb_is} still hurting.",
+};
+
+/**
+ * Helper: Get outcome suffix for a given outcome ID
+ * Returns empty string if no suffix defined (graceful degradation)
+ */
+export function getOutcomeSuffix(outcomeId: string | undefined): string {
+  if (!outcomeId) return "";
+  return OUTCOME_NARRATIVE_SUFFIXES[outcomeId] || "";
+}
