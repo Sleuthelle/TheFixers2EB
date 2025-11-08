@@ -1,0 +1,13 @@
+{
+  "Maya": {
+    "short": "Bottle Episodes founder. Thinks she's better at poker than she actually is. Wears pajamas or a dress. Talks to Claude like it's her friend.",
+    "title": "Bottle Episodes Founder",
+    "bio": "Bottle Episodes founder. You think you're better at poker than you actually are. You wear pajamas or a dress and talk to Claude like it's your friend.",
+    "pronouns": {
+        "subject": "she",
+        "object": "her",
+        "possessive": "her",
+        "plural": false
+    }
+  }
+}
