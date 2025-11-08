@@ -27,7 +27,7 @@ def explore_dict(thing: dict, path: str = ""):
         label = f"{path}.{key}" if path else key.title()
         # print(label)
         if isinstance(value, dict):
-            st.header(key.title())
+            st.header(key.title(), divider="green")
             explore_dict(value, f"{path}.{key.title()}" if path else key.title())
         if isinstance(value, str):
             # col1.write(key)
@@ -40,7 +40,7 @@ def explore_dict(thing: dict, path: str = ""):
             for mod_idx, entry in enumerate(value, start=1):
                 # label = f"{label}.{mod_idx}"
                 if isinstance(entry, dict):
-                    st.header(f"{key.title()} {mod_idx}")
+                    st.header(f"{key.title()} {mod_idx}", divider="green")
                     explore_dict(entry, path=f"{label}.{mod_idx}")
                 if isinstance(entry, str):
                     # col1.write(key)
@@ -100,23 +100,18 @@ st.markdown("""
             border-color: #7FDA8F !important;
             }
             button:hover {
-            background-color: #579C6E !important;
+            background-color: #003322 !important;
             border: 12 px !important;
             color: #000000 !important;
             border-color: #579C6E !important;
             }
              p {
-            color: #7FDA8F !important;
-            font-family: 'Silkscreen', sans-serif !important;
+            color: #7FDA8F;
+            font-family: 'Silkscreen', sans-serif;
             }
             ul {
             color: #7FDA8F !important;
             font-family: 'Silkscreen', sans-serif !important;
-            }
-            .stTextInput {
-            font-family
-            text-color: #1F3522 !important;
-            color: #7FDA8F !important;
             }
             </style>
             """, unsafe_allow_html=True)  
@@ -124,8 +119,7 @@ st.markdown("""
 
 st.title("Bottle Episodes: Creations")
 
-st.header("Write your story", divider="rainbow")
-
+st.header("Write your story", divider="green")
 
 if __name__ == "__main__":
     filePath = st.text_input("Enter file path. Use just a folder for pulling multiple files, and go directly to the file for just the one file.")
