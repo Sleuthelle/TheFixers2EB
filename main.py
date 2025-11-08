@@ -71,7 +71,7 @@ def explore_dict(thing: dict, path: str = ""):
         label = f"{path}.{key}" if path else key.title()
         # print(label)
         if isinstance(value, dict):
-            st.header(key.title())
+            st.header(key.title(), divider="green")
             explore_dict(value, f"{path}.{key.title()}" if path else key.title())
         if isinstance(value, str):
             # col1.write(key)
@@ -84,7 +84,7 @@ def explore_dict(thing: dict, path: str = ""):
             for mod_idx, entry in enumerate(value, start=1):
                 # label = f"{label}.{mod_idx}"
                 if isinstance(entry, dict):
-                    st.header(f"{key.title()} {mod_idx}",divider="green")
+                    st.header(f"{key.title()} {mod_idx}", divider="green")
                     explore_dict(entry, path=f"{label}.{mod_idx}")
                 if isinstance(entry, str):
                     # col1.write(key)
