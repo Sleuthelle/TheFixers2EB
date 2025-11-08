@@ -1,20 +1,21 @@
 import json
 import streamlit as st
+import uuid
 
 def make_str_field(label:str, value:str=..., obj=None):
     state = None
     if obj is not None:
-        state = obj.text_input(label=label, value=value)
+        state = obj.text_input(label=label, value=value, key=str(uuid.uuid4()))
     else:
-        state = st.text_input(label=label, value=value)
+        state = st.text_input(label=label, value=value, key=str(uuid.uuid4()))
     return state
     
 def make_bool_field(label:str, value:bool=False, obj=None):
     state = None
     if obj is not None:
-        state = obj.text_input(label=label, value=value)
+        state = obj.text_input(label=label, value=value, key=str(uuid.uuid4()))
     else:
-        state = st.text_input(label=label, value=value)
+        state = st.text_input(label=label, value=value, key=str(uuid.uuid4()))
     return state
 
 
