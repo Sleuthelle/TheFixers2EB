@@ -21,8 +21,9 @@ def make_bool_field(label:str, value:bool=False, obj=None):
 
 def explore_dict(thing:dict, path:str=""):
     for key, value in thing.items():
-        print(f"{key}")
+        # #print(f"{key}")
         label = f"{path}.{key}" if path else key.title()
+        #print(label)
         if isinstance(value, dict):
             st.header(key.title())
             explore_dict(value, f"{path}.{key.title()}" if path else key.title())
@@ -33,25 +34,25 @@ def explore_dict(thing:dict, path:str=""):
             # col1.write(key)
             make_bool_field(label=label, value=value)
         if isinstance(value, list):
-            print("Found list")
-            for entry in value:
-                if isinstance(value, dict):
-                    print("is dict")
-                    st.header(key.title())
-                    explore_dict(value, f"{path}.{key.title()}" if path else key.title())
-                if isinstance(value, str):
+            #print("Found list")
+            for mod_idx, entry in enumerate(value, start=1):
+                # label = f"{label}.{mod_idx}"
+                if isinstance(entry, dict):
+                    st.header(f"{key.title()} {mod_idx}")
+                    explore_dict(entry, path=f"{label}.{mod_idx}")
+                if isinstance(entry, str):
                     # col1.write(key)
-                    make_str_field(label=label, value=value)
-                if isinstance(value, bool):
+                    make_str_field(label=label, value=entry)
+                if isinstance(entry, bool):
                     # col1.write(key)
-                    make_bool_field(label=label, value=value)
+                    make_bool_field(label=label, value=entry)
 
 
 with open("templates/action.json", "r") as fp:
 # with open("templates/character.json", "r") as fp:
 
     data = json.load(fp)
-    print(data)
+    #print(data)
 explore_dict(data)
     
 
