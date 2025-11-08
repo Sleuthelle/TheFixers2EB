@@ -1,0 +1,1 @@
+{"actions": {"actionId": "Talk", "displayName": "Say Something", "category": "Social", "narratives": {"actor": "You say, \"{message}\"", "target": null, "witness": "{SourceName} says, \"{message}\""}}}

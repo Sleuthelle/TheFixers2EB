@@ -1,23 +1,26 @@
 import streamlit as st
 import json
 import os
+import uuid
 
 
 def make_str_field(label: str, value: str = ..., obj=None):
     state = None
     if obj is not None:
-        state = obj.text_input(label=label, value=value)
+        state = obj.text_input(label=label, value=value, key=str(uuid.uuid4()))
     else:
-        state = st.text_input(label=label, value=value)
+        state = st.text_input(label=label, value=value, key=str(uuid.uuid4()))
+    print(state)
     return state
 
 
 def make_bool_field(label: str, value: bool = False, obj=None):
     state = None
     if obj is not None:
-        state = obj.text_input(label=label, value=value)
+        state = obj.text_input(label=label, value=value, key=str(uuid.uuid4()))
     else:
-        state = st.text_input(label=label, value=value)
+        state = st.text_input(label=label, value=value, key=str(uuid.uuid4()))
+    print(state)
     return state
 
 
@@ -31,10 +34,12 @@ def explore_dict(thing: dict, path: str = ""):
             explore_dict(value, f"{path}.{key.title()}" if path else key.title())
         if isinstance(value, str):
             # col1.write(key)
-            make_str_field(label=label, value=value)
+            thing[key] = st.text_input(label=label, value=value, key=str(uuid.uuid4()))
+            #print("THING KEY HERE:", thing[key])
+            #thing[key] = make_str_field(label=label, value=value)
         if isinstance(value, bool):
             # col1.write(key)
-            make_bool_field(label=label, value=value)
+            thing[key] = make_bool_field(label=label, value=value)
         if isinstance(value, list):
             # print("Found list")
             for mod_idx, entry in enumerate(value, start=1):
@@ -44,11 +49,11 @@ def explore_dict(thing: dict, path: str = ""):
                     explore_dict(entry, path=f"{label}.{mod_idx}")
                 if isinstance(entry, str):
                     # col1.write(key)
-                    make_str_field(label=label, value=entry)
+                    thing[key] = make_str_field(label=label, value=entry)
                 if isinstance(entry, bool):
                     # col1.write(key)
-                    make_bool_field(label=label, value=entry)
-
+                    thing[key] = make_bool_field(label=label, value=entry)
+    #return thing
 
 #with open("templates/action.json", "r") as fp:
     # with open("templates/character.json", "r") as fp:
@@ -64,8 +69,13 @@ if __name__ == "__main__":
             with open(filePath) as jsonFile:
                 jsonFileData = json.load(jsonFile)
                 #st.write(jsonFileData)
-                explore_dict(jsonFileData)
+                #print(explore_dict(jsonFileData))
+                tempDict = explore_dict(jsonFileData)
+                #print(tempDict)
                 print(type(jsonFileData))
+            #if st.button("Write to file", key='writebutton2'):
+            #    print("write button pressed")
+            #    json.dump(tempDict, open("/home/willow/Documents/Hackathon11_25/TheFixers2EB/temp.json", "w"))
 
         else:
             jsonFiles = [jsonPosition for jsonPosition in os.listdir(filePath) if jsonPosition.endswith('.json')]
@@ -73,6 +83,6 @@ if __name__ == "__main__":
                 with open(os.path.join(filePath, file)) as jsonFile:
                     jsonFileData = json.load(jsonFile)
                     #st.write(jsonFileData)
-                    explore_dict(jsonFileData)
+                    tempDict = explore_dict(jsonFileData)
                     print(type(jsonFileData))
 
