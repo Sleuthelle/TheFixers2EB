@@ -49,15 +49,31 @@ def explore_dict(thing:dict, path:str=""):
                     make_bool_field(label=label, value=entry)
 
 
-with open("templates/action.json", "r") as fp:
+
+hints = """
+
+ Placeholder tokens used in fragments:
+ - {character} - Target's display name
+ - {pronoun_subject} - "she", "he", "they"
+ - {pronoun_subject_cap} - "She", "He", "They"
+ - {pronoun_object} - "her", "him", "them"
+ - {pronoun_possessive} - "her", "his", "their"
+ - {verb_look} - "doesn't" or "don't" (based on plural)
+ - {verb_feel} - "feels" or "feel" (based on plural)
+ - {verb_want} - "wants" or "want" (based on plural)
+ - {verb_be} - "is" or "are" (based on plural)
+ - {verb_plan} - "plans" or "plan" (based on plural)
+"""
+
+# sactual streamlit exec starts here
+
+# with open("templates/action.json", "r") as fp:
+with open("templates/tells.json", "r") as fp:
 # with open("templates/character.json", "r") as fp:
-
     data = json.load(fp)
-    #print(data)
+
+st.write(hints)
 explore_dict(data)
-    
-
-
 
 
 
