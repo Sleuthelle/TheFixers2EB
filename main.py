@@ -2,6 +2,45 @@ import streamlit as st
 import json
 import os
 
+st.markdown("""
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Silkscreen&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Silkscreen&display=swap');
+            h1 {
+            color: #7FDA8F !important;
+            font-family: 'Silkscreen', sans-serif !important;
+            text-align: center !important;
+            }
+            h2 {
+            color: #4A7F54 !important;
+            font-family: 'Silkscreen', sans-serif !important;
+            }
+            html, body, [class*="css"] {
+            font-family: 'Silkscreen', sans-serif !important;
+            }
+            button {
+            background-color: #0a0e0a !important;
+            border: 12 px !important;
+            color: #7FDA8F !important;
+            border-color: #7FDA8F !important;
+            }
+            button:hover {
+            background-color: #579C6E !important;
+            border: 12 px !important;
+            color: #000000 !important;
+            border-color: #579C6E !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)  
+            
+#st.image ("https://imgur.com/a/8Wc2tZ8", width="content")
+
+st.title("Bottle Episodes: Creations")
+
+st.header("Write your story", divider="rainbow")
+
+st.button("Make It Yours")
+
 
 def make_str_field(label: str, value: str = ..., obj=None):
     state = None
