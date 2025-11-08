@@ -39,8 +39,6 @@ st.title("Bottle Episodes: Creations")
 
 st.header("Write your story", divider="rainbow")
 
-st.button("Make It Yours")
-
 
 def make_str_field(label: str, value: str = ..., obj=None):
     state = None
