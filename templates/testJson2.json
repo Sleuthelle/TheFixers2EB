@@ -1,0 +1,38 @@
+{
+  "actions": [
+    {
+      "actionId": "Heal",
+      "displayName": "Heal Someone",
+      "category": "Medical",
+      "narratives": {
+        "actor": "You slap that person till they're healed. No idea how that works. Guess you're magic?",
+        
+        "target": "{SourceName} slaps you in the face, and your wounds start to close up. How does this even work?",
+        
+        "witness": "{SourceName} slaps {TargetName} in the face with astonishing force. Surprisingly {TargetName}'s wounds start to close up as {SourceName} does it again. Why does that work?"
+      }
+    },
+    
+    {
+      "actionId": "Attack",
+      "displayName": "Attack",
+      "category": "Combat",
+      "narratives": {
+        "actor": "You strike {TargetName} with the {ItemName}.",
+        "target": "{SourceName} strikes you with the {ItemName}!",
+        "witness": "{SourceName} strikes {TargetName} with the {ItemName}."
+      }
+    },
+    
+    {
+      "actionId": "Talk",
+      "displayName": "Say Something",
+      "category": "Social",
+      "narratives": {
+        "actor": "You say, \"{message}\"",
+        "target": null,
+        "witness": "{SourceName} says, \"{message}\""
+      }
+    }
+  ]
+}
