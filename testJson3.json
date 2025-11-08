@@ -1,0 +1,38 @@
+{
+  "actions": [
+    {
+      "actionId": "Heal",
+      "displayName": "Heal Someone",
+      "category": "Medical",
+      "narratives": {
+        "actor": "You carefully clean {TargetName}'s wounds, fingers working with practiced precision. As you apply the bandage, your hands touch - you both freeze for half a second. There's unexpected eye contact. The moment stretches. By the Nine Divines, kiss already!",
+        
+        "target": "{SourceName} carefully cleans your wounds, fingers working with practiced precision. As {source_pronoun_subject} applies the bandage, your hands touch - you both freeze for half a second. There's unexpected eye contact. The moment stretches. You wonder if you should kiss them.",
+        
+        "witness": "{SourceName} carefully treats {TargetName}'s wounds. As {source_pronoun_subject} applies the final bandage, their hands touch - they both freeze for half a second. There's eye contact. The moment lingers. They should really just kiss. This is hard to watch."
+      }
+    },
+    
+    {
+      "actionId": "Attack",
+      "displayName": "Attack",
+      "category": "Combat",
+      "narratives": {
+        "actor": "You strike {TargetName} with the {ItemName}.",
+        "target": "{SourceName} strikes you with the {ItemName}!",
+        "witness": "{SourceName} strikes {TargetName} with the {ItemName}."
+      }
+    },
+    
+    {
+      "actionId": "Talk",
+      "displayName": "Say Something",
+      "category": "Social",
+      "narratives": {
+        "actor": "You say, \"{message}\"",
+        "target": null,
+        "witness": "{SourceName} says, \"{message}\""
+      }
+    }
+  ]
+}
