@@ -127,22 +127,22 @@ st.title("Bottle Episodes: Creations")
 st.header("Write your story", divider="rainbow")
 
 
-filePath = st.text_input("Enter file path. Use just a folder for pulling multiple files, and go directly to the file for just the one file.")
-if st.button("Submit File Path"):
-    st.write(hints)
-    if filePath.endswith(".json"):
-        with open(filePath) as jsonFile:
-            jsonFileData = json.load(jsonFile)
-            #st.write(jsonFileData)
-            explore_dict(jsonFileData)
-            print(type(jsonFileData))
-
-    else:
-        jsonFiles = [jsonPosition for jsonPosition in os.listdir(filePath) if jsonPosition.endswith('.json')]
-        for index, file in enumerate(jsonFiles):
-            with open(os.path.join(filePath, file)) as jsonFile:
+if __name__ == "__main__":
+    filePath = st.text_input("Enter file path. Use just a folder for pulling multiple files, and go directly to the file for just the one file.")
+    if st.button("Submit File Path"):
+        st.write(hints)
+        if filePath.endswith(".json"):
+            with open(filePath) as jsonFile:
                 jsonFileData = json.load(jsonFile)
                 #st.write(jsonFileData)
                 explore_dict(jsonFileData)
                 print(type(jsonFileData))
+        else:
+            jsonFiles = [jsonPosition for jsonPosition in os.listdir(filePath) if jsonPosition.endswith('.json')]
+            for index, file in enumerate(jsonFiles):
+                with open(os.path.join(filePath, file)) as jsonFile:
+                    jsonFileData = json.load(jsonFile)
+                    #st.write(jsonFileData)
+                    explore_dict(jsonFileData)
+                    print(type(jsonFileData))
 
