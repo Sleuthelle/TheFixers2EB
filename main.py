@@ -5,7 +5,7 @@ import os
 st.markdown("""
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Silkscreen&display=swap');
-            @import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Silkscreen&display=swap');
+            
             h1 {
             color: #7FDA8F !important;
             font-family: 'Silkscreen', sans-serif !important;
@@ -30,10 +30,18 @@ st.markdown("""
             color: #000000 !important;
             border-color: #579C6E !important;
             }
+             p {
+            color: #7FDA8F !important;
+            font-family: 'Silkscreen', sans-serif !important;
+            }
+            .stTextInput {
+            font-family
+            text-color: #1F3522 !important;
+            color: #7FDA8F !important;
+            }
             </style>
             """, unsafe_allow_html=True)  
-            
-#st.image ("https://imgur.com/a/8Wc2tZ8", width="content")
+        
 
 st.title("Bottle Episodes: Creations")
 
