@@ -38,11 +38,6 @@ st.markdown("""
             color: #7FDA8F !important;
             font-family: 'Silkscreen', sans-serif !important;
             }
-            .stTextInput {
-            font-family
-            text-color: #1F3522 !important;
-            color: #7FDA8F !important;
-            }
             </style>
             """, unsafe_allow_html=True)  
         
