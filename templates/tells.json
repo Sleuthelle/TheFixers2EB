@@ -1,0 +1,232 @@
+{
+  "Dalton": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is quietly mouthing Drake lyrics to {pronoun_object}self.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is quietly mouthing Drake lyrics to {pronoun_object}self.",
+      "priority": 51
+    }
+  },
+
+  "Dan": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} keeps going on about the importance of work-life balance.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} keeps going on about the importance of work-life balance.",
+      "priority": 51
+    }
+  },
+
+  "Rachel": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} mentions {pronoun_subject} {verb_feel} like cleaning the kitchen.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} mentions {pronoun_subject} {verb_feel} like cleaning the kitchen.",
+      "priority": 51
+    }
+  },
+
+  "Jack": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is scrolling through office swag on Pinterest.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is scrolling through office swag on Pinterest.",
+      "priority": 51
+    }
+  },
+
+  "Ben": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is going on about how sports are overrated.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is going on about how sports are overrated.",
+      "priority": 51
+    }
+  },
+
+  "Annie": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is making fun of Swifties.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is making fun of Swifties.",
+      "priority": 51
+    }
+  },
+
+  "Kahlil": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} won't stop talking about how {pronoun_subject} {verb_want} to play poker.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} won't stop talking about how {pronoun_subject} {verb_want} to play poker.",
+      "priority": 51
+    }
+  },
+
+  "Maya": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is complaining about how {pronoun_subject} {verb_be} tired of poker.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is complaining about how {pronoun_subject} {verb_be} tired of poker.",
+      "priority": 51
+    }
+  },
+
+  "Timmy": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is keeping to {pronoun_object}self, not talking to anyone.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is keeping to {pronoun_object}self, not talking to anyone.",
+      "priority": 51
+    }
+  },
+
+  "Nate": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is talking about how {pronoun_subject} {verb_be} tired of the college party scene.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is talking about how {pronoun_subject} {verb_be} tired of the college party scene.",
+      "priority": 51
+    }
+  },
+
+  "Ethan": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} keeps saying {pronoun_subject} {verb_be} tired of poker.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} keeps saying {pronoun_subject} {verb_be} tired of poker.",
+      "priority": 51
+    }
+  },
+
+  "Felipe": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is loudly bragging about {pronoun_possessive} app.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is loudly bragging about {pronoun_possessive} app.",
+      "priority": 51
+    }
+  },
+
+  "Dawson": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} won't stop telling bad jokes.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} won't stop telling bad jokes.",
+      "priority": 51
+    }
+  },
+
+  "Brandon": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is being unusually talkative.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is being unusually talkative.",
+      "priority": 51
+    }
+  },
+
+  "Gobin": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is talking about how {pronoun_subject} {verb_plan} to get here at 7 AM tomorrow.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is talking about how {pronoun_subject} {verb_plan} to get here at 7 AM tomorrow.",
+      "priority": 51
+    }
+  },
+
+  "Gautam": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is just staring at you.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is just staring at you.",
+      "priority": 51
+    }
+  },
+
+  "Samuel": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is standing facing the wall.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is standing facing the wall.",
+      "priority": 51
+    }
+  },
+
+  "Michael": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is loudly gossiping on the phone.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is loudly gossiping on the phone.",
+      "priority": 51
+    }
+  },
+
+  "Connor": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} says {pronoun_subject} {verb_plan} to stay past 5 today.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} says {pronoun_subject} {verb_plan} to stay past 5 today.",
+      "priority": 51
+    }
+  },
+
+  "Zaid": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is saying we need to stop filling the fridge with Dr Pepper.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is saying we need to stop filling the fridge with Dr Pepper.",
+      "priority": 51
+    }
+  },
+
+  "Wes": {
+    "logicStatus:ErrorProne": {
+      "text": "{character} is drinking a glass of tap water.",
+      "priority": 51
+    },
+    "narrativeStatus:Symptomatic": {
+      "text": "{character} is drinking a glass of tap water.",
+      "priority": 51
+    }
+  }
+}
